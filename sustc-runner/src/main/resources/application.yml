@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    # TODO: change the following to your own database configuration
+    url: jdbc:postgresql://localhost:5432/test4  # change this to your own jdbc url
+    username: postgres  # change this to your own username (avoid using a superuser)
+    password: pospassword  # change this to your own password
+
+    hikari:
+      connection-timeout: 180000
+#      leak-detection-threshold: 120000 # original
+      leak-detection-threshold: 300000 # modified to
+
+logging:
+  level:
+    root: info
+    io.sustc: debug
+
+---
+
+benchmark:
+  data-path: data
+  student-mode: true
