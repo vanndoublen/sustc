@@ -48,7 +48,7 @@ public class AuthorServiceImpl implements AuthorService {
 
             try (PreparedStatement countState = conn.prepareStatement(sqlCount);){
                 countState.setString(1, author.getLast_name());
-                countState.setString(2, author.getInitials());
+                countState.setString(2, author.getFore_name());
                 countState.setString(3, author.getInitials());
 
                 try (ResultSet countSet = countState.executeQuery();){
@@ -63,7 +63,7 @@ public class AuthorServiceImpl implements AuthorService {
 
             try (PreparedStatement statement = conn.prepareStatement(sql);){
                 statement.setString(1, author.getLast_name());
-                statement.setString(2, author.getInitials());
+                statement.setString(2, author.getFore_name());
                 statement.setString(3, author.getInitials());
                 try (ResultSet resultSet = statement.executeQuery();){
                     int index = 0;

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/styles.css">
+
+</head>
+<body class="container mt-4">
+
+
+<div class="query-box mb-4" data-role="USER,ADMIN">
+    <h3>Get Article Citations By Year</h3>
+    <input type="number" class="form-control mb-2" id="citationId" placeholder="Article ID">
+    <input type="number" class="form-control mb-2" id="citationYear" placeholder="Year">
+    <button onclick="getArticleCitationsByYear()" class="btn btn-dark btn-animated">Get Citations</button>
+    <div id="citationsResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="ADMIN">
+    <h3>Calculate Impact Factor</h3>
+    <input type="number" class="form-control mb-2" id="articleId" placeholder="Article ID">
+    <input type="text" class="form-control mb-2" id="articleTitle" placeholder="Article title">
+    <input type="text" class="form-control mb-2" id="journalId" placeholder="Journal ID">
+    <input type="text" class="form-control mb-2" id="articleJournal" placeholder="Journal name">
+    <input type="date" class="form-control mb-2" id="articleDate" placeholder="Publication date">
+    <button onclick="addArticleAndUpdateIF()" class="btn btn-dark btn-animated">Calculate Impact Factor</button>
+    <div id="addArticleResult" class="result-box"></div>
+    <div id="calculationSteps" class="calculation-steps"></div>
+</div>
+
+<div class="query-box mb-4" data-role="ADMIN">
+    <h3>Get Articles By Author</h3>
+    <input type="text" class="form-control mb-2" id="authorLastName" placeholder="Last name">
+    <input type="text" class="form-control mb-2" id="authorForeName" placeholder="First name">
+    <input type="text" class="form-control mb-2" id="authorInitials" placeholder="Initials">
+    <button onclick="getArticlesByAuthorSortedByCitations()" class="btn btn-dark btn-animated">Get Articles</button>
+    <div id="authorArticlesResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="ADMIN">
+    <h3>Get Author's Most Published Journal</h3>
+    <input type="text" class="form-control mb-2" id="journalAuthorLastName" placeholder="Last name">
+    <input type="text" class="form-control mb-2" id="journalAuthorForeName" placeholder="First name">
+    <input type="text" class="form-control mb-2" id="journalAuthorInitials" placeholder="Initials">
+    <button onclick="getJournalWithMostArticlesByAuthor()" class="btn btn-dark btn-animated">Find Journal</button>
+    <div id="authorJournalResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="USER,ADMIN">
+    <h3>Search Articles by Keyword</h3>
+    <input type="text" class="form-control mb-2" id="keywordInput" placeholder="Enter keyword">
+    <button onclick="getKeyword()" class="btn btn-dark btn-animated">Search</button>
+    <div id="keywordResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="USER,ADMIN">
+    <h3>Get Journal Impact Factor</h3>
+    <input type="text" class="form-control mb-2" id="journalTitle" placeholder="Journal title">
+    <input type="number" class="form-control mb-2" id="journalYear" placeholder="Year">
+    <button onclick="getImpactFactor()" class="btn btn-dark btn-animated">Get Impact Factor</button>
+    <div id="journalResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="ADMIN">
+    <h3>Update Journal Name</h3>
+    <input class="form-control mb-2" type="text" id="oldJournalId" placeholder="Old journal ID">
+    <input class="form-control mb-2" type="text" id="oldJournalName" placeholder="Old journal name">
+    <input class="form-control mb-2" type="number" id="updateYear" placeholder="Year">
+    <input class="form-control mb-2" type="text" id="newJournalName" placeholder="New journal name">
+    <input class="form-control mb-2" type="text" id="newJournalId" placeholder="New journal ID">
+    <button onclick="updateJournalName()" class="btn btn-dark btn-animated">Update Name</button>
+    <div id="updateJournalResult" class="result-box"></div>
+</div>
+
+<div class="query-box mb-4" data-role="USER,ADMIN">
+    <h3>Get Country Funded Papers</h3>
+    <input type="text" class="form-control mb-2" id="countryName" placeholder="Country name">
+    <button onclick="getCountryFundPapers()" class="btn btn-dark btn-animated">Get Papers</button>
+    <div id="countryPapersResult" class="result-box"></div>
+</div>
+
+<form action="/logout" method="post" class="mb-4">
+    <button type="submit" class="btn btn-danger btn-animated">Logout</button>
+</form>
+
+<script src="/js/main.js"></script>
+</body>
+</html>

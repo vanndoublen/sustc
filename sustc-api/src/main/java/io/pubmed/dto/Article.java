@@ -64,7 +64,7 @@ public class Article implements Serializable {
      * date_completed
      */
     private Date completed;
-
+    
     /**
      * pub_model of this article.
      */

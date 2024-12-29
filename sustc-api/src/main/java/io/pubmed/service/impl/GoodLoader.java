@@ -12,9 +12,9 @@ import java.net.URL;
 import com.alibaba.fastjson2.*;
 
 public class GoodLoader {
-    // Total Loading time : 655.124
-    //3000000 records successfully loaded
-    //Loading speed : 4579 records/s
+//    Total Loading time : 675.207
+//    3000000 records successfully loaded
+//    Loading speed : 4443 records/s
     private static final int BATCH_SIZE = 30000;
 
     private static Connection con = null;
@@ -256,9 +256,9 @@ public class GoodLoader {
         fileName = "c:\\Users\\ASUS\\Downloads\\pubmed24n.ndjson";
         Properties properties = new Properties();
         properties.put("host", "localhost");
-        properties.put("user", "postgres");
+        properties.put("user", "vann");
         properties.put("password", "pospassword");
-        properties.put("database", "test4");
+        properties.put("database", "test5");
         Properties prop = new Properties(properties);
         try (BufferedReader infile
                      = new BufferedReader(new FileReader(fileName))) {

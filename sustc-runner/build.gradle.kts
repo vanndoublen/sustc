@@ -22,7 +22,28 @@ dependencies {
     implementation(platform("org.springframework.shell:spring-shell-dependencies:2.1.13"))
     implementation("org.springframework.shell:spring-shell-starter")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+
+//added
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework:spring-webmvc")
+
+//added validation
+    implementation("org.springframework.boot:spring-boot-starter-validation")
+
+//jpa
+//    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
+//spring security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    testImplementation ("org.springframework.security:spring-security-test")
+
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE")
+
+    implementation ("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 }
+
 
 tasks.withType<JavaExec> {
     standardInput = System.`in`

@@ -1,8 +1,8 @@
 spring:
   datasource:
     # TODO: change the following to your own database configuration
-    url: jdbc:postgresql://localhost:5432/test4  # change this to your own jdbc url
-    username: postgres  # change this to your own username (avoid using a superuser)
+    url: jdbc:postgresql://localhost:5432/test5  # change this to your own jdbc url
+    username: vann  # change this to your own username (avoid using a superuser)
     password: pospassword  # change this to your own password
 
     hikari:
@@ -20,3 +20,6 @@ logging:
 benchmark:
   data-path: data
   student-mode: true
+
+
+

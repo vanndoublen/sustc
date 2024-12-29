@@ -7,6 +7,7 @@ import io.pubmed.benchmark.BenchmarkResult;
 import io.pubmed.dto.Author;
 import io.pubmed.dto.Journal;
 import io.pubmed.dto.JournalIssue;
+
 import io.pubmed.service.*;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +15,10 @@ import lombok.val;
 import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.shell.Availability;
 import org.springframework.shell.standard.ShellComponent;
 import org.springframework.shell.standard.ShellMethod;
-import org.springframework.stereotype.Service;
+
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -65,6 +67,7 @@ public class DatabaseCommand {
     private ThreadSafeFury fury;
 
 
+
     @ShellMethod(key = "db groupmember", value = "List group members")
     public List<Integer> listGroupMembers() {
         return databaseService.getGroupMembers();
@@ -80,6 +83,8 @@ public class DatabaseCommand {
     public Integer sum(int a, int b) {
         return databaseService.sum(a, b);
     }
+
+
 
     @ShellMethod(key = "test uj", value = "update journal") // added
     public void updateJournal(){
@@ -246,7 +251,7 @@ public class DatabaseCommand {
         List<Map.Entry<Object[], Double>> list7 = new ArrayList<>();
         List<Object[]> input7 = new ArrayList<>();
 //        Journal journal1 = new Journal("0151424", "United States", "0006-2944", "Biochemical medicine", new JournalIssue("13", "2"));
-        input7.add(new Object[]{"0035623", 2023});
+        input7.add(new Object[]{"Molecular pharmacology", 2023});
         for (Object[] args : input7){
             var res = journalService.getImpactFactor((String) args[0], (int) args[1]);
             log.info("answer for getImpactFactor:  got {}", res);
@@ -263,7 +268,8 @@ public class DatabaseCommand {
         journal = new Journal();
         journal.setId("0151424");
         journal.setTitle("Biochemical medicine");
-        input8.add(new Object[]{journal, 2024,"Biochemical medicine NEW", "0000000"});
+        input8.add(new Object[]{journal, 2023,"Biochemical medicine NEW", "0000000"});
+
 
 //         added by vann
 //        journal.setTitle("title");

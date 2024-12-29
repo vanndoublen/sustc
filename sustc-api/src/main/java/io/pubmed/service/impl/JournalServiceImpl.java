@@ -106,6 +106,10 @@ public class JournalServiceImpl implements JournalService {
 
         String deleteJournalSql = "delete from journal where id = ?;";
 
+        String checkJournalIdSql = "select exists(select  1 from journal where id = ?) as exist;";
+
+        int countInsert = 0;
+        boolean checkId = false;
 
         Connection conn = null;
         try {
@@ -118,6 +122,23 @@ public class JournalServiceImpl implements JournalService {
             String oldJournalId = journal.getId();
             String oldTitle = journal.getTitle();
 
+            //check existence first before doing anything else, because journal should be new
+            try(PreparedStatement checkJournalIdState = conn.prepareStatement(checkJournalIdSql)){
+                checkJournalIdState.setString(1, new_id);
+                System.out.println(checkId + " exist 1");
+
+                try (ResultSet resultSet = checkJournalIdState.executeQuery() ){
+                    if (resultSet.next()){
+                        checkId = resultSet.getBoolean("exist");
+                    }
+                }
+                System.out.println(checkId + " exist id");
+                if (checkId){ //if it is already existed, then the input is wrong
+                    return false;
+                }
+            }
+
+
             //insert new journal
             try (PreparedStatement insertJournalState = conn.prepareStatement(insertJournalSql);) {
                  insertJournalState.setString(1, new_id);
@@ -127,7 +148,9 @@ public class JournalServiceImpl implements JournalService {
                  insertJournalState.setString(5, ""); // volume
                  insertJournalState.setString(6, ""); // issue
 
-                 insertJournalState.execute();
+                 countInsert = insertJournalState.executeUpdate();
+                System.out.println(countInsert + " from insert");
+
              }
 
             //query and store article id
@@ -141,7 +164,6 @@ public class JournalServiceImpl implements JournalService {
                     }
                 }
             }
-
 
 
 
@@ -173,7 +195,7 @@ public class JournalServiceImpl implements JournalService {
             if (countUpdate > 0){ // if it takes affect
                 check = true;
                 // revert it back
-                try (PreparedStatement revertState = conn.prepareStatement(revertSql);){
+                try (PreparedStatement revertState = conn.prepareStatement(revertSql);) {
                     int batchSize = 100; //batch size
                     int batchCount = 0;
                     for (int i = 0; i < oldIdList.size(); i++) {
@@ -182,12 +204,12 @@ public class JournalServiceImpl implements JournalService {
                         revertState.addBatch();
 
                         batchCount++;
-                        if (batchCount % batchSize == 0){
+                        if (batchCount % batchSize == 0) {
                             int[] countBatch = revertState.executeBatch();
                             countRevert += Arrays.stream(countBatch).sum();
                             batchCount = 0;
                         }
-                        if (batchCount >0){
+                        if (batchCount > 0) {
                             int[] remain = revertState.executeBatch();
                             countRevert += Arrays.stream(remain).sum();
                         }
@@ -195,13 +217,14 @@ public class JournalServiceImpl implements JournalService {
                     System.out.println("count revert : " + countRevert);
                 }
 
-                // delete the new journal
+            }
+            // delete the new journal
+            System.out.println("check insert " + countInsert);
+            if (countInsert > 0){
                 try (PreparedStatement deleteJournalState = conn.prepareStatement(deleteJournalSql);){
                     deleteJournalState.setString(1, new_id);
                     deleteJournalState.execute();
                 }
-
-
             }
 
             conn.commit();
